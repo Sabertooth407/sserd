@@ -253,7 +253,7 @@
 h2 {
 
     font-size:
-    clamp(4rem,8vw,7rem);
+    clamp(3rem,6vw,6rem);
 
     line-height: .95;
 }
