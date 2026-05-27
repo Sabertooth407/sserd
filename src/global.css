@@ -1,0 +1,47 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:black;
+    color:white;
+
+    font-family:
+    Inter,
+    system-ui,
+    sans-serif;
+
+    overflow-x:hidden;
+}
+
+section{
+    position:relative;
+}
+
+button{
+    cursor:pointer;
+
+    font-size:.95rem;
+
+    letter-spacing:1px;
+
+    transition:.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+img{
+    max-width:100%;
+}
+
+a{
+    text-decoration:none;
+}
