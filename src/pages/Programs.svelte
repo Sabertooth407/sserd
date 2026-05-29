@@ -16,7 +16,7 @@
 
         {
             title: "CosmoKit",
-            image: "/images/cosmokit.jpg",
+            image: "/images/cosmokitprog.jpg",
             link: "#/programs/cosmokit"
         },
 
@@ -38,7 +38,7 @@
 
         {
             title: "Astro Space Camp",
-            image: "/images/astrocamp.jpg",
+            image: "/images/astrocampprog.jpg",
             link: "#/programs/astro-space-camp"
         },
 
@@ -62,7 +62,7 @@
 
         {
             title: "Junior Space Scientist Program",
-            image: "/images/jssp.jpg",
+            image: "/images/jsspprog.jpg",
             link: "#/programs/jssp"
         }
 

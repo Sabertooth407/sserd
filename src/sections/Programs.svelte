@@ -20,7 +20,7 @@
 
         {
             title: "CosmoKit",
-            image: "/images/cosmokit.png"
+            image: "/images/cosmokit.jpg"
         },
 
         {

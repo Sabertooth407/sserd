@@ -30,9 +30,9 @@ export const scenes = {
 
     impact: {
 
-        type: "video",
+        type: "image",
 
-        src: "/images/impact.mp4"
+        src: "/images/impact.jpg"
 
     },
 
@@ -56,7 +56,7 @@ export const scenes = {
 
         type: "image",
 
-        src: "/images/vision.jpg"
+        src: "/images/vision.png"
 
     },
 
@@ -64,7 +64,7 @@ export const scenes = {
 
         type: "image",
 
-        src: "/images/cta.png"
+        src: "/images/cta.jpg"
 
     }
 

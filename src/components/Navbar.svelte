@@ -4,14 +4,35 @@
 
     let mobileMenu = false;
     let aboutOpen = false;
+
     let scrolled = false;
+    let hidden = false;
+
+    let lastScrollY = 0;
 
     onMount(() => {
 
         const handleScroll = () => {
 
-            scrolled = window.scrollY > 50;
+            const currentScrollY =
+                window.scrollY;
 
+            scrolled = currentScrollY > 30;
+
+            if (
+                currentScrollY >
+                lastScrollY &&
+                currentScrollY > 120
+            ) {
+
+                hidden = true;
+
+            } else {
+
+                hidden = false;
+            }
+
+            lastScrollY = currentScrollY;
         };
 
         window.addEventListener(
@@ -35,6 +56,7 @@
 <nav
     class="navbar"
     class:scrolled
+    class:hidden
 >
 
     <a
@@ -193,9 +215,25 @@
     z-index: 1000;
 
     transition:
+
+        transform .45s cubic-bezier(
+            .4,
+            0,
+            .2,
+            1
+        ),
+
         background .4s ease,
+
         backdrop-filter .4s ease,
+
         border-color .4s ease;
+}
+
+.navbar.hidden {
+
+    transform:
+    translateY(-100%);
 }
 
 .navbar.scrolled {
