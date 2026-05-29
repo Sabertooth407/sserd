@@ -74,53 +74,135 @@
 
     <div class="desktop-links">
 
-        <div
-            class="dropdown"
-            on:mouseenter={() => aboutOpen = true}
-            on:mouseleave={() => aboutOpen = false}
-        >
+        <div class="dropdown">
 
-            <a href="#/about">
+    <a href="#/about">
 
-                About Us
+        About Us
 
+    </a>
+
+    <div class="dropdown-menu">
+
+        <a href="#/about?section=philosophy">
+            Philosophy
+        </a>
+
+        <a href="#/about?section=history">
+            History
+        </a>
+
+        <a href="#/about?section=objective">
+            Objectives
+        </a>
+
+        <a href="#/about?section=people">
+            Our People
+        </a>
+
+        <a href="#/about?section=partners">
+            Our Partners
+        </a>
+
+    </div>
+
+</div>
+
+        <div class="dropdown mega-dropdown">
+
+    <a href="#/programs">
+
+        Programs
+
+    </a>
+
+    <div class="mega-menu">
+
+        <div class="mega-column">
+
+            <div class="mega-title">
+
+                EDUCATION
+
+            </div>
+
+            <a href="#/hands-on-space-education">
+                Hands-on Space Education
             </a>
 
-            {#if aboutOpen}
+            <a href="#/csr-programs">
+                CSR Programs
+            </a>
 
-                <div class="dropdown-menu">
+            <a href="#/cosmokit">
+                CosmoKit
+            </a>
 
-                    <a href="/#/about?section=philosophy">
-    Philosophy
-</a>
+            <a href="#/international-workshops">
+                International Workshops
+            </a>
 
-                    <a href="/#/about?section=history">
-    History
-</a>
-
-<a href="/#/about?section=objective">
-    Objectives
-</a>
-
-<a href="/#/about?section=people">
-    Our People
-</a>
-
-<a href="/#/about?section=partners">
-    Our Partners
-</a>
-
-                </div>
-
-            {/if}
+            <a href="#/space-talks">
+                Space Talks
+            </a>
 
         </div>
 
-        <a href="#/programs">
+        <div class="mega-column">
 
-            Programs
+            <div class="mega-title">
 
-        </a>
+                EXPERIENCE & INNOVATION
+
+            </div>
+
+            <a href="#/astro-space-camp">
+                Astro Space Camp
+            </a>
+
+            <a href="#/space-experience-centre">
+                Space Experience Centre
+            </a>
+
+            <a href="#/research-innovation">
+                Research & Innovation Pathways
+            </a>
+
+            <a href="#/asteroid-search">
+                Asteroid Search Campaign
+            </a>
+
+            <a href="#/jssp">
+                Junior Space Scientist Program
+            </a>
+
+        </div>
+
+        <div class="mega-column">
+
+            <div class="mega-title">
+
+                EMPOWERMENT
+
+            </div>
+
+            <a href="#/girls-in-space">
+                Girls in Space
+            </a>
+
+            <a href="#/internship">
+                Online Internship Program
+            </a>
+
+            <a href="#/international-collaborations">
+                International Collaborations
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
 
         <a href="#/impact">
 
@@ -356,7 +438,8 @@
 
     position: absolute;
 
-    top: calc(100% + 14px);
+margin-top: 16px;
+    top: 100%;
 
     left: -20px;
 
@@ -397,9 +480,51 @@
 
     flex-direction: column;
 
-    animation:
-    dropdownIn .25s ease;
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transform:
+    translateY(10px);
+
+    transition:
+        opacity .25s ease,
+        visibility .25s ease,
+        transform .25s ease;
 }
+
+.dropdown:hover .dropdown-menu {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+    transform:
+    translateY(0);
+}
+
+.dropdown-menu::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -20px;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 20px;
+}
+
+
+
+
 
 .dropdown-menu a {
 
@@ -488,6 +613,165 @@
         255,
         .08
     );
+}
+
+.mega-dropdown {
+
+    position: relative;
+}
+
+.mega-menu {
+
+    position:absolute;
+
+    top:100%;
+
+    left:-50%;
+
+    transform:
+        translateX(-50%)
+        translateY(10px);
+
+    width:min(900px,90vw);
+
+    padding:2rem;
+
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr 1fr;
+
+    gap:2rem;
+
+    border-radius:16px;
+
+    background:
+    rgba(10,10,10,.92);
+
+    backdrop-filter:blur(30px);
+
+    border:
+    1px solid rgba(
+        255,
+        255,
+        255,
+        .08
+    );
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+    transition:
+        opacity .25s ease,
+        visibility .25s ease,
+        transform .25s ease;
+}
+
+.mega-dropdown:hover .mega-menu {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+.mega-dropdown > a {
+
+    position: relative;
+
+    z-index: 1002;
+}
+
+.mega-menu {
+
+    margin-top: 16px;
+}
+
+.mega-menu::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -20px;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 20px;
+}
+
+.mega-column {
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+.mega-title {
+
+    font-size: .8rem;
+
+    letter-spacing: 2px;
+
+    font-weight: 700;
+
+    color: rgba(
+        255,
+        255,
+        255,
+        .55
+    );
+
+    margin-bottom: 1rem;
+
+    padding-bottom: .75rem;
+
+    border-bottom:
+    1px solid rgba(
+        255,
+        255,
+        255,
+        .08
+    );
+}
+
+.mega-column a {
+
+    color:
+    rgba(
+        255,
+        255,
+        255,
+        .8
+    );
+
+    text-decoration: none;
+
+    padding: .55rem 0;
+
+    line-height: 1.5;
+
+    transition:
+        color .25s ease,
+        transform .25s ease;
+}
+
+.mega-column a:hover {
+
+    color: white;
+
+    transform:
+    translateX(5px);
 }
 
 @keyframes dropdownIn {
