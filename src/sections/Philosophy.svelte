@@ -78,7 +78,7 @@
 
         <p>
 
-            Inspired by A. P. J. Abdul Kalam,
+            Inspired by Dr. A. P. J. Abdul Kalam,
             SSERD exists to ignite scientific
             thinking and empower young minds
             to explore the universe.

@@ -1,60 +1,198 @@
 <script>
 
-let active = {
-    country: "Mauritius",
-    image: "/images/international/mauritius.jpg",
-    text: "Conducted space education programs in Mauritius."
-};
+import Globe
+from "../components/Globe.svelte";
 
-const locations = [
+const countries = {
 
-    {
-        country: "Mauritius",
-        image: "/images/international/mauritius.jpg",
-        text: "Conducted space education programs in Mauritius.",
-        top: "55%",
-        left: "52%"
+    India:{
+
+        title:
+        "India",
+
+        subtitle:
+        "Origin Of Impact",
+
+        image:
+        "/images/international/india.jpg",
+
+        description:
+        "For over a decade, SSERD has worked across India delivering aerospace education, STEM outreach programs, workshops, camps and research opportunities to students from diverse backgrounds. Through collaborations with schools, institutions and organizations, SSERD has nurtured curiosity and innovation among thousands of learners.",
+
+        points:[
+
+            "100,000+ students reached",
+
+            "Programs across India",
+
+            "CSR outreach initiatives",
+
+            "Space education ecosystem"
+
+        ]
     },
 
-    {
-        country: "Sri Lanka",
-        image: "/images/international/srilanka.jpg",
-        text: "Teaching and mentoring students in Sri Lanka.",
-        top: "58%",
-        left: "48%"
+    Mauritius:{
+
+        title:
+        "Mauritius",
+
+        subtitle:
+        "International Education",
+
+        image:
+        "/images/international/mauritius.jpg",
+
+        description:
+        "SSERD expanded its outreach into Mauritius through international space education initiatives focused on experiential learning, STEM engagement and astronomy awareness. These programs connected students with the excitement of space exploration through hands-on activities and workshops.",
+
+        points:[
+
+            "Student engagement",
+
+            "STEM awareness",
+
+            "Astronomy education",
+
+            "International collaboration"
+
+        ]
     },
 
-    {
-        country: "Philippines",
-        image: "/images/international/philippines.jpg",
-        text: "Conducting camps and building a team presence in the Philippines.",
-        top: "50%",
-        left: "75%"
+    "Sri Lanka":{
+
+        title:
+        "Sri Lanka",
+
+        subtitle:
+        "Teaching & Mentorship",
+
+        image:
+        "/images/international/srilanka.jpg",
+
+        description:
+        "Through educational outreach and mentorship initiatives, SSERD worked with students and educators in Sri Lanka, encouraging scientific curiosity and exposure to aerospace concepts.",
+
+        points:[
+
+            "Mentorship",
+
+            "Workshops",
+
+            "Student outreach",
+
+            "Cross-border engagement"
+
+        ]
     },
 
-    {
-        country: "Ghana",
-        image: "/images/international/ghana.jpg",
-        text: "Interacting with students and educators in Ghana.",
-        top: "48%",
-        left: "32%"
+    Philippines:{
+
+        title:
+        "Philippines",
+
+        subtitle:
+        "Camp & Team Presence",
+
+        image:
+        "/images/international/philippines.jpg",
+
+        description:
+        "SSERD established a growing presence in the Philippines through camps, outreach programs and collaborative educational activities focused on aerospace learning and STEM engagement.",
+
+        points:[
+
+            "Space camps",
+
+            "Youth engagement",
+
+            "Team building",
+
+            "International outreach"
+
+        ]
     },
 
-    {
-        country: "Australia",
-        image: "/images/international/australia.jpg",
-        text: "Educational outreach and student engagement in Australia.",
-        top: "72%",
-        left: "82%"
+    Ghana:{
+
+        title:
+        "Ghana",
+
+        subtitle:
+        "Global Interaction",
+
+        image:
+        "/images/international/ghana.jpg",
+
+        description:
+        "Through interactions with students and educators in Ghana, SSERD contributed to global conversations around space education and STEM empowerment.",
+
+        points:[
+
+            "Student interaction",
+
+            "Educational exchange",
+
+            "Space awareness",
+
+            "Global collaboration"
+
+        ]
+    },
+
+    Australia:{
+
+        title:
+        "Australia",
+
+        subtitle:
+        "International Collaboration",
+
+        image:
+        "/images/international/australia.jpg",
+
+        description:
+        "SSERD engaged with learners and educators from Australia through international collaborations and educational outreach activities that fostered curiosity and global learning.",
+
+        points:[
+
+            "Collaboration",
+
+            "STEM engagement",
+
+            "Educational outreach",
+
+            "Global partnerships"
+
+        ]
     }
 
-];
+};
+
+let active =
+countries.India;
+
+function updateCountry(name){
+
+    active =
+    countries[name];
+
+}
 
 </script>
 
 <section class="international">
 
-    <div class="content">
+    <div class="globe-column">
+
+        <Globe
+            onCountryHover=
+            {updateCountry}
+        />
+
+    </div>
+
+    <div class="content-column">
 
         <div class="eyebrow">
 
@@ -64,84 +202,76 @@ const locations = [
 
         <h2>
 
-            Taking Curiosity
-            Beyond Borders.
+            Taking
+            Curiosity
+            Beyond
+            Borders.
 
         </h2>
 
-        <p>
+        <p class="intro">
 
-            From classrooms in India to global policy
-            platforms, SSERD’s journey has extended
-            across continents — connecting youth,
-            educators, researchers and institutions
+            From classrooms in India to global
+            policy platforms, SSERD's journey
+            has extended across continents —
+            connecting students, educators,
+            researchers and institutions
             through the shared language of space.
 
         </p>
 
-        <div class="highlight">
+        <div class="hover-note">
 
-            Our international exposure reflects
-            not just participation —
-            but contribution.
+            Hover over highlighted countries
+            on the globe to explore SSERD's
+            international impact.
 
         </div>
 
-        <div class="preview">
+        <div class="country-card">
 
             <img
                 src={active.image}
-                alt={active.country}
+                alt={active.title}
             >
 
-            <div>
+            <div class="country-content">
 
                 <h3>
 
-                    {active.country}
+                    {active.title}
 
                 </h3>
 
+                <div class="subtitle">
+
+                    {active.subtitle}
+
+                </div>
+
                 <p>
 
-                    {active.text}
+                    {active.description}
 
                 </p>
+
+                <ul>
+
+                    {#each active.points as point}
+
+                        <li>
+
+                            {point}
+
+                        </li>
+
+                    {/each}
+
+                </ul>
 
             </div>
 
         </div>
-
-    </div>
-
-    <div class="map-wrapper">
-
-        <img
-            class="world-map"
-            src="/images/worldmap.png"
-            alt="World Map"
-        >
-
-        {#each locations as location}
-
-            <button
-
-                class="marker"
-
-                style="
-                    top:{location.top};
-                    left:{location.left};
-                "
-
-                on:mouseenter={() => active = location}
-
-            >
-
-                <span></span>
-
-            </button>
-
-        {/each}
 
     </div>
 
@@ -152,79 +282,102 @@ const locations = [
 .international{
 
     padding:
-    8rem
-    8vw;
+    6rem
+    8vw
+    8rem;
 
     display:grid;
 
     grid-template-columns:
-    0.9fr
-    1.1fr;
+    minmax(500px, 55%)
+    minmax(420px, 45%);
 
-    gap:5rem;
+    gap:4rem;
 
     align-items:center;
+
+    overflow:hidden;
+}
+
+.globe-column{
+
+    width:100%;
+
+    max-width:850px;
+
+    justify-self:center;
+}
+
+.content-column{
+
+    width:100%;
+
+    max-width:650px;
+
+    position:relative;
+
+    z-index:5;
 }
 
 .eyebrow{
 
-    letter-spacing:8px;
+    letter-spacing:10px;
 
-    opacity:.65;
+    opacity:.6;
 
     margin-bottom:1rem;
+
+    font-size:.85rem;
 }
 
-.content h2{
+.content-column h2{
 
     font-size:
-    clamp(3rem,6vw,5rem);
+    clamp(
+        4rem,
+        8vw,
+        7rem
+    );
 
-    line-height:1.05;
+    line-height:.92;
 
     margin-bottom:2rem;
 }
 
-.content p{
+.intro{
+
+    font-size:1.1rem;
 
     line-height:2;
 
-    opacity:.85;
+    opacity:.8;
 
-    font-size:1.1rem;
+    margin-bottom:2rem;
 }
 
-.highlight{
+.hover-note{
 
-    margin-top:2rem;
+    font-size:.95rem;
 
-    font-size:1.4rem;
+    opacity:.55;
 
-    font-weight:600;
+    margin-bottom:1.5rem;
 
-    line-height:1.6;
+    letter-spacing:.5px;
 }
 
-.preview{
+.country-card{
 
-    margin-top:3rem;
+    border-radius:28px;
 
-    display:flex;
-
-    gap:1.5rem;
-
-    align-items:center;
-
-    padding:1rem;
-
-    border-radius:20px;
+    overflow:hidden;
 
     background:
     rgba(
         255,
         255,
         255,
-        .03
+        .04
     );
 
     border:
@@ -234,117 +387,84 @@ const locations = [
         255,
         .08
     );
+
+    backdrop-filter:
+    blur(16px);
+
+    transition:.35s ease;
 }
 
-.preview img{
+.country-card img{
 
-    width:140px;
+    width:100%;
 
-    height:100px;
+    height:240px;
 
     object-fit:cover;
-
-    border-radius:14px;
 }
 
-.preview h3{
+.country-content{
 
-    margin-bottom:.5rem;
+    padding:2rem;
 }
 
-.preview p{
+.country-content h3{
 
-    font-size:.95rem;
+    font-size:2.1rem;
 
-    opacity:.8;
+    margin-bottom:.3rem;
 }
 
-.map-wrapper{
+.subtitle{
+
+    opacity:.6;
+
+    margin-bottom:1.25rem;
+
+    letter-spacing:1px;
+}
+
+.country-content p{
+
+    line-height:1.85;
+
+    opacity:.85;
+
+    margin-bottom:1.5rem;
+}
+
+.country-content ul{
+
+    list-style:none;
+
+    padding:0;
+
+    display:grid;
+
+    gap:.8rem;
+}
+
+.country-content li{
 
     position:relative;
 
-    width:100%;
+    padding-left:1.5rem;
 
-    min-height:600px;
+    opacity:.9;
 }
 
-.world-map{
+.country-content li::before{
 
-    width:100%;
-
-    opacity:.8;
-
-    filter:
-    brightness(.9);
-}
-
-.marker{
+    content:"●";
 
     position:absolute;
 
-    width:18px;
+    left:0;
 
-    height:18px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:#fff;
-
-    cursor:pointer;
-
-    transform:
-    translate(-50%,-50%);
+    color:#6EE7FF;
 }
 
-.marker span{
-
-    position:absolute;
-
-    inset:-10px;
-
-    border-radius:50%;
-
-    border:
-    1px solid rgba(
-        255,
-        255,
-        255,
-        .4
-    );
-
-    animation:
-    pulse
-    2s
-    infinite;
-}
-
-@keyframes pulse{
-
-    0%{
-
-        transform:scale(.5);
-
-        opacity:1;
-    }
-
-    100%{
-
-        transform:scale(2);
-
-        opacity:0;
-    }
-}
-
-.marker:hover{
-
-    transform:
-    translate(-50%,-50%)
-    scale(1.4);
-}
-
-@media(max-width:1100px){
+@media(max-width:1200px){
 
     .international{
 
@@ -353,9 +473,19 @@ const locations = [
         gap:4rem;
     }
 
-    .map-wrapper{
+    .content-column{
 
-        min-height:450px;
+        max-width:none;
+    }
+
+    .content-column h2{
+
+        font-size:
+        clamp(
+            3.5rem,
+            10vw,
+            6rem
+        );
     }
 }
 
@@ -364,15 +494,14 @@ const locations = [
     .international{
 
         padding:
-        5rem
-        2rem;
+        4rem
+        2rem
+        6rem;
     }
 
-    .preview{
+    .country-card img{
 
-        flex-direction:column;
-
-        align-items:flex-start;
+        height:220px;
     }
 }
 

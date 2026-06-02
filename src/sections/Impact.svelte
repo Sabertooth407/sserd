@@ -20,7 +20,7 @@ let countries = 0;
 
         gsap.to(studentCounter, {
 
-            value: 100000,
+            value: 150000,
 
             duration: 2,
 

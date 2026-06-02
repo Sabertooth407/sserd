@@ -36,7 +36,7 @@
 
             <p class="lead">
 
-                We draw inspiration from the visionary life of A. P. J. Abdul Kalam — scientist, teacher, and one of the greatest minds of modern India.
+                We draw inspiration from the visionary life of Dr. A. P. J. Abdul Kalam — scientist, teacher, and one of the greatest minds of modern India.
 
 
             </p>

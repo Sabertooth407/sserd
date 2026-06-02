@@ -1,353 +1,330 @@
 <script>
 
 import { onMount } from "svelte";
-import * as THREE from "three";
+import Globe from "globe.gl";
 
 export let onCountryHover;
 
-let container;
+let globeEl;
 
-const countries = [
+const highlightedCountries = [
+
+    "India",
+    "Australia",
+    "Ghana",
+    "Sri Lanka",
+    "Mauritius",
+    "Philippines"
+
+];
+
+const pins = [
 
     {
-        name:"Mauritius",
-        lat:-20.3,
-        lon:57.5,
-        image:"/images/international/mauritius.jpg",
-        text:"Conducted space education programs in Mauritius."
+        country:"India",
+        lat:20.5937,
+        lng:78.9629
     },
 
     {
-        name:"Sri Lanka",
-        lat:7.8,
-        lon:80.7,
-        image:"/images/international/srilanka.jpg",
-        text:"Teaching and mentoring students in Sri Lanka."
+        country:"Australia",
+        lat:-25.2744,
+        lng:133.7751
     },
 
     {
-        name:"Philippines",
-        lat:12.8,
-        lon:121.8,
-        image:"/images/international/philippines.jpg",
-        text:"Conducting camps and building a team presence in the Philippines."
+        country:"Ghana",
+        lat:7.9465,
+        lng:-1.0232
     },
 
     {
-        name:"Ghana",
-        lat:7.9,
-        lon:-1.0,
-        image:"/images/international/ghana.jpg",
-        text:"Interacting with students and educators in Ghana."
+        country:"Sri Lanka",
+        lat:7.8731,
+        lng:80.7718
     },
 
     {
-        name:"Australia",
-        lat:-25.0,
-        lon:133.0,
-        image:"/images/international/australia.jpg",
-        text:"Educational outreach and student engagement in Australia."
+        country:"Mauritius",
+        lat:-20.3484,
+        lng:57.5522
+    },
+
+    {
+        country:"Philippines",
+        lat:12.8797,
+        lng:121.7740
     }
 
 ];
 
-function latLonToVector3(lat, lon, radius){
+onMount(async()=>{
 
-    const phi =
-        (90 - lat) *
-        (Math.PI / 180);
+    const countries =
+        await fetch(
+            "/data/world.geojson"
+        )
+        .then(r=>r.json());
 
-    const theta =
-        (lon + 180) *
-        (Math.PI / 180);
+    const globe = Globe()
 
-    return new THREE.Vector3(
+        (globeEl)
 
-        -radius *
-        Math.sin(phi) *
-        Math.cos(theta),
+        .backgroundColor(
+            "rgba(0,0,0,0)"
+        )
 
-        radius *
-        Math.cos(phi),
+        .globeImageUrl(
+            "https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
+        )
 
-        radius *
-        Math.sin(phi) *
-        Math.sin(theta)
+        .showAtmosphere(true)
 
-    );
+        .atmosphereColor(
+            "#7CC8FF"
+        )
 
-}
+        .atmosphereAltitude(
+            0.22
+        )
 
-onMount(() => {
+        .polygonsData(
+            countries.features
+        )
 
-    const scene =
-        new THREE.Scene();
+        .polygonCapColor(feature=>{
 
-    const camera =
-        new THREE.PerspectiveCamera(
-            45,
-            container.clientWidth /
-            container.clientHeight,
-            0.1,
-            1000
-        );
+            const name =
+                feature.properties.name;
 
-    camera.position.z = 5;
+            if(
 
-    const renderer =
-        new THREE.WebGLRenderer({
+                highlightedCountries
+                .includes(name)
 
-            antialias:true,
-            alpha:true
+            ){
+
+                if(name==="India"){
+
+                    return "#FFD54F";
+                }
+
+                return "#59D7FF";
+            }
+
+            return "rgba(255,255,255,.03)";
+
+        })
+
+        .polygonSideColor(
+            ()=>"rgba(0,0,0,0)"
+        )
+
+        .polygonStrokeColor(
+            ()=>"rgba(255,255,255,.12)"
+        )
+
+        .polygonAltitude(feature=>{
+
+            const name =
+                feature.properties.name;
+
+            return highlightedCountries
+                .includes(name)
+
+                ? 0.02
+
+                : 0.005;
+
+        })
+
+        .pointsData(
+            pins
+        )
+
+        .pointColor(point=>
+
+            point.country==="India"
+
+            ? "#FFD54F"
+
+            : "#6EE7FF"
+
+        )
+
+        .pointAltitude(
+            0.08
+        )
+
+        .pointRadius(
+            0.6
+        )
+
+        .pointResolution(
+            20
+        )
+
+        .onPointHover(point=>{
+
+            if(point){
+
+                globe.controls()
+                    .autoRotate = false;
+
+                globe.pointOfView({
+
+                    lat:point.lat,
+                    lng:point.lng,
+                    altitude:1.6
+
+                },800);
+
+                onCountryHover?.(
+                    point.country
+                );
+
+            }
+
+            else{
+
+                globe.controls()
+                    .autoRotate = true;
+            }
 
         });
 
-    renderer.setSize(
+    globe.controls()
+        .enableZoom = false;
 
-        container.clientWidth,
-        container.clientHeight
+    globe.controls()
+        .autoRotate = true;
 
-    );
+    globe.controls()
+        .autoRotateSpeed = 0.25;
 
-    container.appendChild(
-        renderer.domElement
-    );
+    globe.pointOfView({
 
-    const globe =
-        new THREE.Mesh(
+    lat:15,
+    lng:80,
+    altitude:2.2
 
-            new THREE.SphereGeometry(
-                1.5,
-                64,
-                64
-            ),
-
-            new THREE.MeshStandardMaterial({
-
-                color:0x1a1a1a,
-
-                metalness:0.3,
-
-                roughness:0.7
-
-            })
-
-        );
-
-    scene.add(globe);
-
-    const glow =
-        new THREE.Mesh(
-
-            new THREE.SphereGeometry(
-                1.58,
-                64,
-                64
-            ),
-
-            new THREE.MeshBasicMaterial({
-
-                color:0x5fa8ff,
-
-                transparent:true,
-
-                opacity:0.12
-
-            })
-
-        );
-
-    scene.add(glow);
-
-    const light =
-        new THREE.PointLight(
-            0xffffff,
-            2
-        );
-
-    light.position.set(
-        5,
-        3,
-        5
-    );
-
-    scene.add(light);
-
-    scene.add(
-        new THREE.AmbientLight(
-            0xffffff,
-            .7
-        )
-    );
-
-    const raycaster =
-        new THREE.Raycaster();
-
-    const mouse =
-        new THREE.Vector2();
-
-    const markers = [];
-
-    countries.forEach(country => {
-
-        const marker =
-            new THREE.Mesh(
-
-                new THREE.SphereGeometry(
-                    0.03,
-                    16,
-                    16
-                ),
-
-                new THREE.MeshBasicMaterial({
-
-                    color:0xffffff
-
-                })
-
-            );
-
-        marker.position.copy(
-
-            latLonToVector3(
-                country.lat,
-                country.lon,
-                1.55
-            )
-
-        );
-
-        marker.userData =
-            country;
-
-        markers.push(marker);
-
-        scene.add(marker);
-
-    });
-
-    let autoRotate = true;
-
-    function onMove(e){
-
-        const rect =
-            renderer.domElement
-                .getBoundingClientRect();
-
-        mouse.x =
-            ((e.clientX - rect.left)
-            / rect.width) * 2 - 1;
-
-        mouse.y =
-            -((e.clientY - rect.top)
-            / rect.height) * 2 + 1;
-
-        raycaster.setFromCamera(
-            mouse,
-            camera
-        );
-
-        const hit =
-            raycaster.intersectObjects(
-                markers
-            );
-
-        if(hit.length){
-
-            autoRotate = false;
-
-            onCountryHover?.(
-                hit[0].object.userData
-            );
-
-        } else {
-
-            autoRotate = true;
-
-        }
-
-    }
-
-    renderer.domElement
-        .addEventListener(
-            "mousemove",
-            onMove
-        );
-
-    function animate(){
-
-        requestAnimationFrame(
-            animate
-        );
-
-        if(autoRotate){
-
-            globe.rotation.y += .0025;
-
-            glow.rotation.y += .0025;
-
-            markers.forEach(m => {
-
-                m.position.applyAxisAngle(
-
-                    new THREE.Vector3(
-                        0,
-                        1,
-                        0
-                    ),
-
-                    .0025
-
-                );
-
-            });
-
-        }
-
-        renderer.render(
-            scene,
-            camera
-        );
-
-    }
-
-    animate();
-
-    window.addEventListener(
-        "resize",
-        () => {
-
-            camera.aspect =
-                container.clientWidth /
-                container.clientHeight;
-
-            camera.updateProjectionMatrix();
-
-            renderer.setSize(
-
-                container.clientWidth,
-                container.clientHeight
-
-            );
-
-        }
-    );
+});
 
 });
 </script>
 
 <div
-    bind:this={container}
-    class="globe"
-></div>
+    bind:this={globeEl}
+    class="globe-wrapper"
+>
+
+    <div
+        bind:this={globeEl}
+        class="globe"
+    ></div>
+
+</div>
 
 <style>
+
+.globe-wrapper{
+
+    position:relative;
+
+    width:100%;
+
+    height:700px;
+
+    max-width:800px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+}
 
 .globe{
 
     width:100%;
 
-    height:750px;
+    height:100%;
+}
+
+.globe-wrapper::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:600px;
+
+    height:600px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+
+            circle,
+
+            rgba(
+                89,
+                215,
+                255,
+                .18
+            ) 0%,
+
+            rgba(
+                89,
+                215,
+                255,
+                .08
+            ) 40%,
+
+            transparent 75%
+
+        );
+
+    filter:blur(50px);
+
+    pointer-events:none;
+
+    z-index:0;
+}
+
+.globe{
+
+    position:relative;
+
+    z-index:1;
+}
+
+@media(max-width:1400px){
+
+    .globe-wrapper{
+
+        height:800px;
+    }
+}
+
+@media(max-width:1100px){
+
+    .globe-wrapper{
+
+        height:700px;
+    }
+}
+
+@media(max-width:768px){
+
+    .globe-wrapper{
+
+        height:550px;
+    }
 }
 
 </style>
